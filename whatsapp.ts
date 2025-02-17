@@ -44,8 +44,6 @@ export interface WhatsAppServiceClient {
   sendMessage(request: SendMessageDto): Observable<SuccessResponse>;
 
   generateQr(request: DeviceID): Observable<SuccessResponse>;
-
-  disconnect(request: DeviceID): Observable<SuccessResponse>;
 }
 
 export interface WhatsAppServiceController {
@@ -54,13 +52,11 @@ export interface WhatsAppServiceController {
   sendMessage(request: SendMessageDto): Promise<SuccessResponse> | Observable<SuccessResponse> | SuccessResponse;
 
   generateQr(request: DeviceID): Promise<SuccessResponse> | Observable<SuccessResponse> | SuccessResponse;
-
-  disconnect(request: DeviceID): Promise<SuccessResponse> | Observable<SuccessResponse> | SuccessResponse;
 }
 
 export function WhatsAppServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["sendMedia", "sendMessage", "generateQr", "disconnect"];
+    const grpcMethods: string[] = ["sendMedia", "sendMessage", "generateQr"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("WhatsAppService", method)(constructor.prototype[method], method, descriptor);
