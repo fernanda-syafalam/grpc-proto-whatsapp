@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package whatsapp;
+
+service WhatsAppService {
+    rpc SendMedia(SendMediaDto) returns (SuccessResponse);
+    rpc SendMessage(SendMessageDto) returns (SuccessResponse);
+    rpc GenerateQR(DeviceID) returns (SuccessResponse);
+    rpc Disconnect(DeviceID) returns (SuccessResponse);
+}
+
+message DeviceID {
+    string deviceID = 1;
+}
+
+message SendMessageDto {
+    string deviceID =1;
+    string to = 2;
+    string message = 3;
+    optional int32 disappearingDay = 4;
+}
+
+message SendMediaDto {
+    string deviceID = 1;
+    string to = 2;
+    string urlMedia = 3;
+    string mediaName = 4;
+    bool ptt = 5;
+    string mediaType = 6;
+    optional int32 disappearingDay = 7;
+}
+
+message SuccessResponse {
+    bool success = 1;
+    string message = 2;
+}   
