@@ -6,6 +6,7 @@ service WhatsAppService {
     rpc SendMedia(SendMediaDto) returns (SuccessResponse);
     rpc SendMessage(SendMessageDto) returns (SuccessResponse);
     rpc GenerateQR(DeviceID) returns (SuccessResponse);
+    rpc Disconnect(DeviceID) returns (SuccessResponse);
 }
 
 message DeviceID {
