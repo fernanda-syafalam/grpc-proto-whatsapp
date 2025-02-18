@@ -3,14 +3,51 @@ syntax = "proto3";
 package whatsapp;
 
 service WhatsAppService {
-    rpc SendMedia(SendMediaDto) returns (SuccessResponse);
-    rpc SendMessage(SendMessageDto) returns (SuccessResponse);
-    rpc GenerateQR(DeviceID) returns (SuccessResponse);
-    rpc Disconnect(DeviceID) returns (SuccessResponse);
+    rpc Disconnect(DeviceID) returns (DefaultResponse);
+    rpc GenerateQR(DeviceID) returns (DefaultResponse);
+    rpc GetGroups(DeviceID) returns (GetGroupsResponse);
+    rpc GetDevices(Null) returns (GetDevicesResponse);
+    rpc SendMessage(SendMessageDto) returns (DefaultResponse);
 }
 
 message DeviceID {
     string deviceID = 1;
+}
+
+message GetDevicesResponse {
+    bool success = 1;
+    int32 code = 2;
+    repeated string message = 3;
+}
+
+
+message GetGroupsResponse {
+    bool success = 1;
+    int32 code = 2;
+    repeated Group message = 3;
+}
+
+message Group {
+    string id = 1;
+    string subject = 2;
+    string subjectOwner = 3;
+    int64 subjectTime = 4;
+    int32 size = 5;
+    int64 creation = 6;
+    string owner = 7;
+    bool restrict = 8;
+    bool announce = 9;
+    bool isCommunity = 10;
+    bool isCommunityAnnounce = 11;
+    bool joinApprovalMode = 12;
+    bool memberAddMode = 13;
+    repeated Participant participants = 14;
+    int32 ephemeralDuration = 15;
+}
+
+message Participant {
+    string id = 1;
+    string admin = 2; // Can be "superadmin", "admin", or null
 }
 
 message SendMessageDto {
@@ -30,7 +67,15 @@ message SendMediaDto {
     optional int32 disappearingDay = 7;
 }
 
-message SuccessResponse {
+message DefaultResponse {
     bool success = 1;
-    string message = 2;
-}   
+    int32 code = 2;
+    oneof result {
+        string message = 3;
+        string error = 4;
+    }
+}
+
+message Null {
+
+}
