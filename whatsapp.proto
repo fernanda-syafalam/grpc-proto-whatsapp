@@ -30,24 +30,9 @@ message GetGroupsResponse {
 message Group {
     string id = 1;
     string subject = 2;
-    string subjectOwner = 3;
-    int64 subjectTime = 4;
-    int32 size = 5;
-    int64 creation = 6;
-    string owner = 7;
-    bool restrict = 8;
-    bool announce = 9;
-    bool isCommunity = 10;
-    bool isCommunityAnnounce = 11;
-    bool joinApprovalMode = 12;
-    bool memberAddMode = 13;
-    repeated Participant participants = 14;
-    int32 ephemeralDuration = 15;
-}
-
-message Participant {
-    string id = 1;
-    string admin = 2; // Can be "superadmin", "admin", or null
+    optional string subjectOwner = 3;
+    optional int64 subjectTime = 4;
+    optional int32 size = 5;
 }
 
 message SendMessageDto {
